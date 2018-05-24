@@ -1,0 +1,4 @@
+#!/bin/bash
+ssh -l $2 $(aws ec2 describe-instances --filter "Name=tag:Name,Values="$1""|\
+  jq '.Reservations[].Instances[] | {PublicIpAddress}'|\
+  tr ' "' '\n'|head -n 8|tail -n 1|tr -d '\n')
